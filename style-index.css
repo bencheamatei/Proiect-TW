@@ -1,0 +1,733 @@
+* {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+html {
+    color-scheme: dark light;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #3b7cc5;
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+a:link { 
+  text-decoration: none; 
+} 
+a:visited { 
+  text-decoration: none; 
+} 
+a:hover { 
+  text-decoration: none; 
+} 
+a:active { 
+  text-decoration: none; 
+}
+
+header {
+    background-image: radial-gradient(#2b9bd6,#3b7cc5);
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10fr;
+}
+
+@media (max-width: 600px) {
+    header {
+        height: 80vh;
+    }
+}
+
+.container {
+    margin-inline: auto;
+    max-width: 50rem;
+    padding: 2rem;
+}
+
+section {
+    padding-block: 2rem;
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+footer {
+    padding: 2em;
+    height: auto;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3em;
+}
+
+footer div {
+    color: black;
+    flex-shrink: 0;
+}
+
+.contact {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact a {
+    background: white;
+    padding: 1em;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.039);
+}
+
+#instagram::before {
+    content: "Instagram";
+}
+
+#github::before {
+    content: "Github";
+}
+
+#facebook::before {
+    content: "Facebook";
+}
+
+.contact a::before {
+    position: absolute;
+    color: white;
+    background-color: var(--culoares);
+    border-radius: 100px;
+    padding: 0.5em 0.5em;
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: 200ms ease;
+}
+
+.contact a:hover {
+    background-color: var(--culoares);
+    fill: white;
+}
+
+.contact a:hover::before {
+    transform: translateY(-50px);
+    opacity: 1;
+}
+
+.contact a svg{
+    height: 30px;
+}
+
+header svg {
+    position: absolute;
+    height: 40px;
+    margin-top: 5em;
+    margin-bottom: 5em;
+    fill: rgb(55, 91, 199);
+    animation-name: muta;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-delay: 1200ms;
+    animation-timing-function: ease-in;
+}
+
+header svg:active {
+    fill: pink;
+}
+
+#prima_barcuta {
+    transform: translateY(-80px);
+    fill: rgb(173, 41, 52);
+    animation-name: muta;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    animation-delay: 1500ms;
+    animation-timing-function: cubic-bezier(0.12,0.55,0.93,0.6);
+    margin-top: 0px;
+}
+
+/* @keyframes muta {
+    0% {
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(max(32vw,200px));
+    }
+
+    90% {
+        transform: translateX(-4vw);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+} */
+
+@keyframes muta {
+    0% {
+        left: 0;
+    }
+
+    50% {
+        left: 100%;
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
+#rules_container{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+}
+
+.rule_card{
+    background-color: bisque;
+    color: black;
+    border-radius: 10px;
+    padding: 1em;
+    height: 450px;
+    box-shadow: 2px 2px 2px;
+    transform: scale(1);
+    transition: transform;
+    transition-duration: 500ms;
+}
+
+.rule_card:hover{
+    transform: scale(1.05);
+}
+
+.rule_card h2{
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.rule_card h2::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 5px;
+    transition: all 300ms;
+    background-color: #3b7cc5;
+}   
+
+.rule_card:hover h2::after {
+    width: 100%;
+}
+
+ul {
+    list-style: none;
+}
+
+li:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+#game_container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.game_card{
+    flex-shrink: 0;
+    background-color: bisque;
+    color: rgb(117, 152, 184);
+    border-radius: 10px;
+    padding: 1em;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 300px;
+    width: 30%;
+    transition-property: background-color;
+    transition-duration: 700ms;
+    border-color: rgb(117, 152, 184);
+    border-width: 2px;
+    border-radius: 10px;
+    border-style: dashed;
+}
+
+.game_card h2 {
+    position: relative;
+}
+
+.game_card:nth-of-type(1) h2::after {
+    position: absolute;
+    content: "";
+    background: linear-gradient(to right, #7AD7F0, #DBF3FA);
+    height: 5px;
+    width: 100%;
+    bottom: -5px;
+    left: 0;
+}
+
+.game_card:nth-of-type(2) h2::after {
+    position: absolute;
+    content: "";
+    background: linear-gradient(to right, #790001, #500002);
+    height: 5px;
+    width: 100%;
+    bottom: -5px;
+    left: 0;
+}
+
+.game_card:nth-of-type(1):hover {
+    background-color: rgb(55, 91, 199);
+    color: aliceblue;
+}
+
+.game_card:nth-of-type(2):hover {
+    background-color: rgb(173, 41, 52);
+    color: aliceblue;
+}
+
+.game_card:nth-of-type(1):hover p{
+    font-size: 20px;
+}
+
+.game_card:nth-of-type(2):hover p{
+    font-size: 20px;
+}
+
+.game_card p {
+    min-width: 100%;
+    width: 0;
+}
+
+.game_card a {
+    display: block;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    text-decoration: none;
+    color: aliceblue;
+    border: 2px solid aliceblue;
+    text-align: center;
+    position: relative;
+    transition: all 400ms;
+}
+
+.game_card a span {
+    position: relative;
+    z-index: 2;
+}
+
+.game_card a::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    transition: all 400ms;
+    background-color: rgb(119, 0, 128);
+}
+
+.game_card a:hover::after {
+    width: 100%;
+}
+
+
+header div {
+    align-self: center;
+    justify-self: center;
+}
+
+header h1 {
+    font-size: 100px;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropbutton {
+    border: none;
+    cursor: pointer;
+    padding: 1em;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 50px;
+    width: 150px;
+    height: 40px;
+    background-color: rgb(123,123,125);
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drop_content {
+    position: absolute;
+    background-color: rgb(123,123,125);
+    left: 0;
+    bottom: -115px;
+    display: none;
+    width: 100%;
+}
+
+.drop_content a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: aliceblue;
+    background-color: rgb(123,123,125);
+    height: 40px;
+}
+
+.drop_content a:hover {
+    border-width: 1px;
+    border-color: aliceblue;
+    border-style: dashed;
+    background-color: rgb(139, 139, 142);
+    font-size: 20px;
+}
+
+.dropdown:hover .drop_content {
+    display: block;
+    left: 0;
+}
+
+#history p {
+    margin-bottom: 30px;
+}
+
+figure {
+    text-wrap: stable;
+    padding: 10px;
+    display: inline-block;
+    background-color: whitesmoke;
+    color: black;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    margin: 10px;
+    width: auto;
+    border-radius: 10px;
+    transition-property: transform;
+    transition-duration: 500ms;
+
+}
+
+figure img {
+    height: 300px;
+    width: 100%;
+    border-width: 1px;
+    border-color: black;
+    border-style: groove;
+}
+
+figure:hover {
+    transform: scale(1.05);
+}
+
+#image_div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#history_div {
+    color: black;
+    font-size: large;
+    padding: 1em;
+    border-radius: 20px;
+    position: relative;
+    margin-bottom: 20px;
+    margin: 1em;
+    background-image: url(imgaini/table.jpg);
+    background-size: contain;
+}
+
+@media (min-width: 1300px) {
+    #history_div {
+        background-size: cover;
+    }
+}
+
+header h1 {
+    margin-inline: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 4px solid white;
+    animation-name: typewriter;
+    animation-duration: 100s;
+    animation-timing-function: steps(20);
+    animation-iteration-count: infinite;
+}
+
+@keyframes typewriter {
+    0% {
+        width: 0%;
+    }
+
+    3% {
+        width: 100%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    #headerdiv h1{
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 1250px) {
+    #image_div {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+#playgame {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10fr;
+    background-color: rgb(225,191,146);
+    border-radius: 30px 30px 0px 0px;
+    min-height: min(100vh,100%);
+}
+
+#playgame h2 {
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 20px;
+}
+
+@keyframes press_p {
+    0%,25%,35%,100% {
+        transform: translateY(0px);
+        color: white;
+    }
+
+    30% {
+        color:#3b7cc5;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes press_l {
+    0%,100%,75%,85% {
+        transform: translateY(0px);
+        color: white;
+    }
+
+    80% {
+        color:#3b7cc5;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes press_a {
+    0%,100%,55%,65% {
+        transform: translateY(0px);
+        color: white;
+    }
+
+    60% {
+        color:#3b7cc5;
+        transform: translateY(10px);
+    }
+}
+
+@keyframes press_y {
+    0%,100%,45%,55% {
+        transform: translateY(0px);
+        color: white;
+    }
+
+    50% {
+        transform: translateY(10px);
+        color:#3b7cc5;
+    }
+}
+
+.exp {
+    display: inline-block;
+    border: none !important;
+}
+
+.exp:nth-of-type(1) {
+    animation-name: press_p;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+.exp:nth-of-type(2) {
+    animation-name: press_a;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+.exp:nth-of-type(3) {
+    animation-name: press_l;
+    animation-duration: 4.5s;
+    animation-iteration-count: infinite;
+}
+
+.exp:nth-of-type(4) {
+    animation-name: press_y;
+    animation-duration: 5.5s;
+    animation-iteration-count: infinite;
+}
+
+#rules {
+    background-color: rgb(236,204,162);
+    height: min(100vh,100%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px auto 4fr auto;
+}
+
+#rules h2 {
+    align-self: center;
+    justify-self: center;
+    font-size: 40px;
+}
+
+#rules p {
+    font-size: 20px;
+    color: rgb(117, 152, 184);
+    padding: 30px;
+    border-top-width: 1px;
+    border-top-color: grey;
+    border-top-style: dashed;
+
+    border-bottom-width: 1px;
+    border-bottom-color: grey;
+    border-bottom-style: dashed;
+}
+
+#rules a {
+    color: rgb(117, 152, 184);
+    position: relative;
+}
+
+#rules a::after {
+    text-align: center;
+    position: absolute;
+    font-size: 15px;
+    content: "Press me!";
+    background-color: white;
+    width: 100px;
+    color: black;
+    padding: 0.5em;
+    transform: translateX(-150px);
+    opacity: 0;
+    transition: 200ms ease-in;
+    border-radius: 50px;
+}
+
+#rules a:hover::after {
+    opacity: 1;
+    transform: translateX(10px);
+}
+
+#rules_container {
+    padding: 2em;
+}
+
+#history {
+    background-color: rgb(246,215,176);
+}
+
+#mergi_sus {
+    width: 30px;
+    fill: black;
+}
+
+#history {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+#history h2 {
+    margin-bottom: 30px;
+    align-self: center;
+    justify-self: center;
+    font-size: 40px;
+    text-shadow: 4px 4px 0 #ff005e, 6px 6px 0 #00d4ff;
+    animation: dance_history 2s infinite;
+}
+
+#history h2 span {
+    animation-name: story;
+    animation-duration: 10s;
+    animation-iteration-count: infinite; 
+}
+
+@keyframes story { /*what's the story? morning glory*/
+    0%, 100%,35%, 65% {
+        opacity: 1;
+    }
+
+    40%,60% {
+        opacity: 0;
+    }
+}
+
+@keyframes dance_history {
+    0%, 100% {
+        text-shadow: 4px 4px 0 #ff005e, 6px 6px 0 #00d4ff;
+    }
+    50% {
+        text-shadow: -4px -4px 0 #00d4ff, -6px -6px 0 #ff005e;
+    }
+}
+
+#history_div p{
+    color: aliceblue;
+    position: relative;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(22, 62, 162, 0.495);
+    transition: all 500ms;
+    opacity: 0.1;
+}
+
+#history_div p:hover {
+    background-color: rgb(22, 62, 162);
+    opacity: 1;   
+}
+
+#headerdiv {
+    position: relative;
+}
+
+#playgame h2 {
+    font-size: 40px;
+}
