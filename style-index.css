@@ -714,14 +714,8 @@ header h1 {
     position: relative;
     border-radius: 10px;
     padding: 10px;
-    background-color: rgba(22, 62, 162, 0.495);
-    transition: all 500ms;
-    opacity: 0.1;
-}
-
-#history_div p:hover {
     background-color: rgb(22, 62, 162);
-    opacity: 1;   
+    opacity: 1;
 }
 
 #headerdiv {
