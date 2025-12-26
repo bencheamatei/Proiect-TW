@@ -67,7 +67,7 @@ function potPune(x,y,a,len,ori){
 
 window.onload=function() {
 
-    localStorage.setItem("lastseen","normal.html");
+    localStorage.setItem("lastseen","ma.html");
 
     const gameCont=document.getElementsByClassName("game_container")[0];
 
@@ -115,8 +115,8 @@ window.onload=function() {
                 for(let j=0; j<10; j++){
                     if(a[i][j]>0){
                         let uu=document.getElementById("r"+i+"c"+j);
-                        uu.style.backgroundColor="rgba(0, 0, 255, 0.5)";
-                        uu.style.border="2px solid blue";
+                        uu.style.backgroundColor="rgba(222, 184, 135, 0.5)";
+                        uu.style.border="2px solid burlywood";
                     }
                 }
             }
@@ -235,16 +235,16 @@ window.onload=function() {
                         if(ori[shipId]==0){
                             for(let i=x; i<x+szs[shipId]; i++){
                                 const tt=document.getElementById("r"+i+"c"+y);
-                                tt.style.backgroundColor="rgba(0, 0, 255, 0.5)";
-                                tt.style.border="2px solid blue";
+                                tt.style.backgroundColor="rgba(222, 184, 135, 0.5)";
+                                tt.style.border="2px solid burlywood";
                                 a[i][y]=shipId;
                             }
                         }
                         else {
                             for(let j=y; j<y+szs[shipId]; j++){
                                 const tt=document.getElementById("r"+x+"c"+j);
-                                tt.style.backgroundColor="rgba(0, 0, 255, 0.5)";
-                                tt.style.border="2px solid blue";
+                                tt.style.backgroundColor="rgba(222, 184, 135, 0.5)";
+                                tt.style.border="2px solid burlywood";
                                 a[x][j]=shipId;
                             }
                         }
@@ -322,6 +322,7 @@ window.onload=function() {
             }
         }
 
+
         let turn=0;
         let sa=[];
         let sb=[];
@@ -335,17 +336,6 @@ window.onload=function() {
             sb.push(aux2);
         }
 
-        let xo=document.createElement("div");
-        xo.id="bossimg";
-
-        let ixo=document.createElement("img");
-        ixo.alt="the boss";
-        ixo.src="./imgaini/TestRosu1.png";
-        xo.appendChild(ixo);
-        gameCont.appendChild(xo);
-
-        let nrHit=1;
-
         function addClick(event){
             const s=event.target.id;
             let x=Number(s[2]),y=Number(s[4]);
@@ -358,8 +348,6 @@ window.onload=function() {
                 event.target.innerHTML="X";
                 event.target.style.backgroundColor="rgba(255, 0, 0, 0.418)";
                 event.target.style.border="2px red solid";
-                nrHit++;
-                ixo.src=`./imgaini/TestRosu${nrHit}.png`;
             }
 
             for(let i=0; i<10; i++){
@@ -421,199 +409,39 @@ window.onload=function() {
         }
 
         function gameOver(a,b,sa,sb){
-            let ok=1;
+            let cnt=0;
+            let cnt2=0;
             for(let i=0; i<10; i++){
                 for(let j=0; j<10; j++){
-                    if(b[i][j]>0 && sa[i][j]==0){
-                        ok=0;
+                    if(sb[i][j]==1){
+                        cnt++;
+                    }
+                    if(sa[i][j]==1){
+                        cnt2++;
                     }
                 }
-            }
-            if(ok){
-                return 1;
             }
 
-            ok=1;
-            for(let i=0; i<10; i++){
-                for(let j=0; j<10; j++){
-                    if(a[i][j]>0 && sb[i][j]==0){
-                        ok=0;
-                    }
-                }
+            if(cnt==100){
+                return 1;
             }
-            if(ok){
+            if(cnt2==100){
                 return -1;
             }
             return 0;
         }   
 
         function chooseMove(a,sb){
-            // caut cea mai ok mutare pentru calculator (cumva tot random o sa fie)
-            // singura chestie care chiar trebuie bagata e ca atunci cand nimereste o nava sa o caute pana la capat
-            fq=[];
-            for(let i=0; i<=10; i++){
-                fq.push(0);
-            }
-            for(let i=0; i<10; i++){
-                for(let j=0; j<10; j++){
-                    if(sb[i][j]==1 && a[i][j]>0){
-                        fq[a[i][j]]++;
-                    }
-                }
-            }
-            for(let p=10; p>=1; p--){
-                if(fq[p]>0 && fq[p]<szs[p]){
-                    if(fq[p]==1){
-                        for(let i=0; i<10; i++){
-                            for(let j=0; j<10; j++){
-                                if(sb[i][j]==1 && a[i][j]==p){
-                                    //console.log(i,j);
-                                    let posb=[];
-                                    if(inside(i-1,j) && sb[i-1][j]==0){
-                                        posb.push([i-1,j]);
-                                    }
-                                    if(inside(i+1,j) && sb[i+1][j]==0){
-                                        posb.push([i+1,j]);
-                                    }
-                                    if(inside(i,j+1) && sb[i][j+1]==0){
-                                        posb.push([i,j+1]);
-                                    }
-                                    if(inside(i,j-1) && sb[i][j-1]==0){
-                                        posb.push([i,j-1]);
-                                    }
-
-                                    let rp=Math.floor(Math.random()*posb.length);
-                                    return [67,posb[rp][0],posb[rp][1]];
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    else {
-                        // vreau sa aflu daca caut ceva vertical sau orizontal 
-                        let mn=100,mx=-100;
-                        let p1=-1,p2=-1;
-                        for(let i=0; i<10; i++){
-                            for(let j=0; j<10; j++){
-                                if(sb[i][j]==1 && a[i][j]==p){
-                                    if(i<mn){
-                                        mn=i;
-                                        p1=j;
-                                    }
-                                    if(i>=mx){
-                                        mx=i;
-                                        p2=j;
-                                    }
-                                }
-                            }
-                        }
-
-                        if(mx==mn){
-                            // trebuie sa caut pe orizontala
-                            for(let i=0; i<10; i++){
-                                for(let j=0; j<10; j++){
-                                    if(sb[i][j]==1 && a[i][j]==p){
-                                        if(j<mn){
-                                            mn=j;
-                                            p1=i;
-                                        }
-                                        if(j>=mx){
-                                            mx=j;
-                                            p2=i;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if(mn!=mx-1 && (sb[p1][mn+1]==0 || sb[p2][mx-1]==0)){
-                                if(sb[p1][mn+1]==0){
-                                    return [67,p1,mn+1];
-                                }
-                                else {
-                                    return [67,p2,mx-1];
-                                }
-                            }
-                            else {
-                                if(inside(p1,mn-1) && sb[p1][mn-1]==0){
-                                    return [67,p1,mn-1];
-                                }
-                                if(inside(p2,mx+1) && sb[p2][mx+1]==0){
-                                    return [67,p2,mx+1];
-                                }
-                            }
-                        }
-                        else {
-                            // caut pe verticala
-                            if(mn!=mx-1 && (sb[mn+1][p1]==0 || sb[mx-1][p2]==0)){
-                                if(sb[mn+1][p1]==0){
-                                    return [67,mn+1,p1];
-                                }
-                                else {
-                                    return [67,mx-1,p2];
-                                }
-                            }
-                            else {
-                                if(inside(mn-1,p1) && sb[mn-1][p1]==0){
-                                    return [67,mn-1,p1];
-                                }
-                                if(inside(mx+1,p2) && sb[mx+1][p2]==0){
-                                    return [67,mx+1,p2];
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-
-            mx=[0,-1,-1];
+            let posb=[];
             for(let i=0; i<10; i++){
                 for(let j=0; j<10; j++){
                     if(sb[i][j]==0){
-                        let val=0;
-                        for(let k=0; k<4; k++){
-                            if(i+k<10 && sb[i+k][j]==0){
-                                val++;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-
-                        for(let k=0; k<4; k++){
-                            if(j+k<10 && sb[i][j+k]==0){
-                                val++;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-
-                        for(let k=0; k<4; k++){
-                            if(i-k>=0 && sb[i-k][j]==0){
-                                val++;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-
-                        for(let k=0; k<4; k++){
-                            if(j-k<10 && sb[i][j-k]==0){
-                                val++;
-                            }
-                            else {
-                                break;
-                            }
-                        }
-                        val+=(Math.abs(i-5)+Math.abs(j-5));
-                        if(val>mx[0]){
-                            mx=[val,i,j];
-                        }
+                        posb.push([0,i,j]);
                     }
                 }
             }
-            return mx;
+            let rn=Math.floor(Math.random()*posb.length);
+            return posb[rn];
         }
 
         function runGame(){
@@ -630,12 +458,10 @@ window.onload=function() {
                 setTimeout(()=>{
                     let p1=document.getElementsByClassName("board")[0];
                     let p2=document.getElementsByClassName("botboard")[0];
-                    let p3=document.getElementById("bossimg");
                     p1.remove();
                     p2.remove();
-                    p3.remove();
                     setUp();
-                }, 3000);
+                }, 500);
             }
             else 
             {

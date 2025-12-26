@@ -1,0 +1,81 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+body {
+    color: black;
+    background-color: cornflowerblue;
+    font-family: Fira Mono, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 3em;
+    height: 100vh;
+}
+
+.trebe {
+    color: red;
+}
+
+.question {
+    border: 2px black solid;
+    padding: 5px;
+    display: none;
+}
+
+.question:hover {
+    border: 2px black solid;
+    padding: 5px;
+    background-color: rgb(72, 129, 234);
+}
+
+fieldset {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2em;
+    padding: 50px;
+}
+
+button {
+    border: 2px black solid;
+    padding: 5px;
+    background-color: cornflowerblue;
+    width: 120px;
+    height: 40px;
+    transform: scale(1.0);
+    transition-property: transform;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
+}
+
+button:hover {
+    background-color: rgb(72, 129, 234);
+    transform: scale(0.95);
+}
+
+svg {
+    height: 40px;
+    position: absolute;
+}
+
+#barcuta1 {
+    top: 100px;
+    left: 100px;
+    fill: blue;
+}
+
+#barcuta2 {
+    top: 300px;
+    right: 50px;
+    fill: yellow;
+}
+
+#barcuta3 {
+    bottom: 100px;
+    left: 500px;
+    fill: red;
+}

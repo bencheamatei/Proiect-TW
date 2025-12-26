@@ -1,11 +1,13 @@
 * {
     margin: 0;
     padding: 0;
+    
 }
 
 body {
     background: radial-gradient(#2b9bd6,#3b7cc5);
     color: aliceblue;
+    font-family: Fira Mono, monospace;
 }
 
 main {
@@ -44,17 +46,21 @@ main {
     color: black;
 }
 
-header p {
+header {
+    height: 1.5em;
     text-align: center;
-    font-size: 40px;
+    font-size: 30px;
+    gap: 1em;
 }
 
-header {
-    background-color: antiquewhite;
-    height: 2em;
-    color: black;
-    text-align: center;
-    font-size: 40px;
+header div {
+    color: antiquewhite;
+    padding: 5px;
+    border: 2px solid antiquewhite;
+}
+
+header a {
+    color: antiquewhite;   
 }
 
 .ship_deck {
@@ -164,4 +170,26 @@ header {
     transform: scale(0.85);
 }
 
+a {
+    text-decoration: none;
+}
 
+header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    padding: 10px;
+}
+
+svg {
+    width: 50px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bossimg {
+    align-self: center;
+}
