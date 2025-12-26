@@ -176,12 +176,13 @@ a {
 
 header {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 5fr 10fr 5fr 1fr;
     padding: 10px;
 }
 
-svg {
-    width: 50px;
+header svg {
+    width: 60px;
+    fill: white !important;
 }
 
 footer {

@@ -461,7 +461,7 @@ window.onload=function() {
                     p1.remove();
                     p2.remove();
                     setUp();
-                }, 500);
+                }, 3000);
             }
             else 
             {
