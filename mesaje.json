@@ -1,0 +1,19 @@
+{
+    "loser": [
+        {"msg": "Looking back, you will be more disappointed by the things you didn't do rather than the ones you did"},
+        {"msg": "Thought you were good at it huh?"},
+        {"msg": "Good game, maybe you'll get it next time"},
+        {"msg": "Thanks for the tutorial"}
+    ],
+
+    "winner": [
+        {"msg": "Thy force was with you"},
+        {"msg": "Lucky"},
+        {"msg": "Good game, maybe I'll get my revenge another time"}
+    ],
+
+    "hit": [
+        {"msg": "Auch"},
+        {"msg": "Lucky shot"}
+    ]
+}

@@ -65,7 +65,17 @@ function potPune(x,y,a,len,ori){
     }
 }
 
-window.onload=function() {
+window.onload=async function() {
+
+    let getmesaje;
+    this.fetch("./mesaje.json")
+        .then(resp=>resp.json())
+        .then(mesaje=>{
+            getmesaje=mesaje;
+        })
+        .catch(error=>{
+            console.error(error);
+        })
 
     localStorage.setItem("lastseen","ma.html");
 
@@ -105,6 +115,15 @@ window.onload=function() {
 
     function setUp() {
         writeUp("Place your ships");
+        for(let i=1; i<=10; i++){
+            ori[i]=1;
+        }
+
+        for(let i=0; i<10; i++){
+            for(let j=0; j<10; j++){
+                a[i][j]=0;
+            }
+        }
 
         let rr=document.createElement("div");
         rr.classList.add("randomize");
@@ -452,7 +471,13 @@ window.onload=function() {
                     let cnt=localStorage.getItem(user+"|points");
                     cnt++;
                     localStorage.setItem(user+"|points",cnt);
+                    let rid=Math.floor(Math.random()*getmesaje["winner"].length);
+                    writeUp(getmesaje["winner"][rid]["msg"]);
                     writeSum(user+" | wins: "+cnt,document.getElementById("userinfo"));
+                }
+                else {
+                    let rid=Math.floor(Math.random()*getmesaje["loser"].length);
+                    writeUp(getmesaje["loser"][rid]["msg"]);
                 }
 
                 setTimeout(()=>{

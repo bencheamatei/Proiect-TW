@@ -65,7 +65,16 @@ function potPune(x,y,a,len,ori){
     }
 }
 
-window.onload=function() {
+window.onload=async function() {
+    let getmesaje;
+    this.fetch("./mesaje.json")
+        .then(resp=>resp.json())
+        .then(mesaje=>{
+            getmesaje=mesaje;
+        })
+        .catch(error=>{
+            console.error(error);
+        })
 
     localStorage.setItem("lastseen","normal.html");
 
@@ -105,6 +114,15 @@ window.onload=function() {
 
     function setUp() {
         writeUp("Place your ships");
+        for(let i=1; i<=10; i++){
+            ori[i]=1;
+        }
+
+        for(let i=0; i<10; i++){
+            for(let j=0; j<10; j++){
+                a[i][j]=0;
+            }
+        }
 
         let rr=document.createElement("div");
         rr.classList.add("randomize");
@@ -353,6 +371,7 @@ window.onload=function() {
                 event.target.innerHTML="M";
                 event.target.style.backgroundColor="rgba(128, 128, 128, 0.3)";
                 event.target.style.border="2px grey solid";
+                writeUp("");
             }
             else {
                 event.target.innerHTML="X";
@@ -360,6 +379,15 @@ window.onload=function() {
                 event.target.style.border="2px red solid";
                 nrHit++;
                 ixo.src=`./imgaini/TestRosu${nrHit}.png`;
+
+                let uycaramba=Math.floor(Math.random()*3);
+                if(uycaramba==0){
+                    let ppuy=Math.floor(Math.random()*getmesaje["hit"].length);
+                    writeUp(getmesaje["hit"][ppuy]["msg"]);
+                }
+                else {
+                    writeUp("");
+                }
             }
 
             for(let i=0; i<10; i++){
@@ -481,92 +509,62 @@ window.onload=function() {
                                     if(inside(i,j-1) && sb[i][j-1]==0){
                                         posb.push([i,j-1]);
                                     }
-
                                     let rp=Math.floor(Math.random()*posb.length);
                                     return [67,posb[rp][0],posb[rp][1]];
                                 }
                             }
                         }
-                        break;
                     }
                     else {
-                        // vreau sa aflu daca caut ceva vertical sau orizontal 
-                        let mn=100,mx=-100;
-                        let p1=-1,p2=-1;
+                        posz=[];
                         for(let i=0; i<10; i++){
                             for(let j=0; j<10; j++){
                                 if(sb[i][j]==1 && a[i][j]==p){
-                                    if(i<mn){
-                                        mn=i;
-                                        p1=j;
-                                    }
-                                    if(i>=mx){
-                                        mx=i;
-                                        p2=j;
-                                    }
+                                    posz.push([i,j])
                                 }
                             }
                         }
+                        if(posz.length<2)
+                            break;
 
-                        if(mx==mn){
-                            // trebuie sa caut pe orizontala
-                            for(let i=0; i<10; i++){
-                                for(let j=0; j<10; j++){
-                                    if(sb[i][j]==1 && a[i][j]==p){
-                                        if(j<mn){
-                                            mn=j;
-                                            p1=i;
-                                        }
-                                        if(j>=mx){
-                                            mx=j;
-                                            p2=i;
-                                        }
-                                    }
+                        if(posz[0][0]==posz[1][0]){
+                            // din natura cautarii stiu sigur ca in 0 e cea mai mica pozitie
+                            for(let i=0; i<posz.length-1; i++){
+                                if(posz[i][1]!=posz[i+1][1]-1 && sb[posz[0][0]][posz[i][1]+1]==0){
+                                    return [67,posz[0][0],posz[i][1]+1];
                                 }
                             }
 
-                            if(mn!=mx-1 && (sb[p1][mn+1]==0 || sb[p2][mx-1]==0)){
-                                if(sb[p1][mn+1]==0){
-                                    return [67,p1,mn+1];
-                                }
-                                else {
-                                    return [67,p2,mx-1];
-                                }
+                            if(inside(posz[0][0],posz[0][1]-1) && sb[posz[0][0]][posz[0][1]-1]==0){
+                                return [67,posz[0][0],posz[0][1]-1];
                             }
-                            else {
-                                if(inside(p1,mn-1) && sb[p1][mn-1]==0){
-                                    return [67,p1,mn-1];
-                                }
-                                if(inside(p2,mx+1) && sb[p2][mx+1]==0){
-                                    return [67,p2,mx+1];
-                                }
+
+                            let pl=posz.length-1;
+                            if(inside(posz[pl][0],posz[pl][1]+1) && sb[posz[pl][0]][posz[pl][1]+1]==0){
+                                return [67,posz[pl][0],posz[pl][1]+1];
                             }
                         }
                         else {
-                            // caut pe verticala
-                            if(mn!=mx-1 && (sb[mn+1][p1]==0 || sb[mx-1][p2]==0)){
-                                if(sb[mn+1][p1]==0){
-                                    return [67,mn+1,p1];
-                                }
-                                else {
-                                    return [67,mx-1,p2];
+                            for(let i=0; i<posz.length-1; i++){
+                                if(posz[i][0]!=posz[i+1][0]-1 && sb[posz[i][0]+1][posz[i][1]]==0){
+                                    return [67,posz[i][0]+1,posz[i][1]];
                                 }
                             }
-                            else {
-                                if(inside(mn-1,p1) && sb[mn-1][p1]==0){
-                                    return [67,mn-1,p1];
-                                }
-                                if(inside(mx+1,p2) && sb[mx+1][p2]==0){
-                                    return [67,mx+1,p2];
-                                }
+
+                            if(inside(posz[0][0]-1,posz[0][1]) && sb[posz[0][0]-1][posz[0][1]]==0){
+                                return [67,posz[0][0]-1,posz[0][1]];
+                            }
+
+                            let pl=posz.length-1;
+                            if(inside(posz[pl][0]+1,posz[pl][1]) && sb[posz[pl][0]+1][posz[pl][1]]==0){
+                                return [67,posz[pl][0]+1,posz[pl][1]];
                             }
                         }
                     }
-                    break;
                 }
             }
 
-            mx=[0,-1,-1];
+            mx=[-1000000000,-1,-1];
             for(let i=0; i<10; i++){
                 for(let j=0; j<10; j++){
                     if(sb[i][j]==0){
@@ -606,7 +604,7 @@ window.onload=function() {
                                 break;
                             }
                         }
-                        val+=(Math.abs(i-5)+Math.abs(j-5));
+                        val-=(Math.abs(i-5)+Math.abs(j-5));
                         if(val>mx[0]){
                             mx=[val,i,j];
                         }
@@ -625,6 +623,12 @@ window.onload=function() {
                     cnt++;
                     localStorage.setItem(user+"|points",cnt);
                     writeSum(user+" | wins: "+cnt,document.getElementById("userinfo"));
+                    let rid=Math.floor(Math.random()*getmesaje["winner"].length);
+                    writeUp(getmesaje["winner"][rid]["msg"]);
+                }
+                else {
+                    let rid=Math.floor(Math.random()*getmesaje["loser"].length);
+                    writeUp(getmesaje["loser"][rid]["msg"]);
                 }
 
                 setTimeout(()=>{
@@ -639,6 +643,9 @@ window.onload=function() {
             }
             else 
             {
+                let board1=document.getElementsByClassName("board")[0];
+                let board2=document.getElementsByClassName("botboard")[0];
+
                 if(turn==0){
                     for(let i=0; i<10; i++){
                         for(let j=0; j<10; j++){
