@@ -465,9 +465,21 @@ window.onload=async function() {
             sa[x][y]=1;
             if(b[x][y]==0){
                 turn=1-turn;
+                if(Math.floor(Math.random()*5)==0){
+                    msjboss.innerHTML=getmesaje["miss"][Math.floor(Math.random()*getmesaje["miss"].length)]["msg"];
+                }
+                else {
+                    msjboss.innerHTML="";
+                }
                 setTimeout(runGame,500);
             }
             else {
+                if(Math.floor(Math.random()*5)==0){
+                    msjboss.innerHTML=getmesaje["hit"][Math.floor(Math.random()*getmesaje["hit"].length)]["msg"];
+                }
+                else {
+                    msjboss.innerHTML="";
+                }
                 let loccnt=0;
                 for(let i=0; i<10; i++){
                     for(let j=0; j<10; j++){
@@ -535,17 +547,46 @@ window.onload=async function() {
             return 0;
         }   
 
-        function chooseMove(a,sb){
-            let posb=[];
-            for(let i=0; i<10; i++){
-                for(let j=0; j<10; j++){
-                    if(sb[i][j]==0){
-                        posb.push([0,i,j]);
+        function chooseMove(a,sb,pdif){
+            if(pdif==1){
+                let posb=[];
+                for(let i=0; i<10; i++){
+                    for(let j=0; j<10; j++){
+                        if(sb[i][j]==0){
+                            posb.push([0,i,j]);
+                        }
                     }
                 }
+                let rn=Math.floor(Math.random()*posb.length);
+                return posb[rn];
             }
-            let rn=Math.floor(Math.random()*posb.length);
-            return posb[rn];
+            else {
+                mn=[100000000,-1,-1]
+                for(let i=0; i<10; i++){
+                    for(let j=0; j<10; j++){
+                        if(sb[i][j]==0){
+                            cand=0;
+                            if(i<10-i){
+                                cand+=i;
+                            }
+                            else {
+                                cand+=(10-i);
+                            }
+                            if(j<10-j){
+                                cand+=j;
+                            }
+                            else {
+                                cand+=(10-j);
+                            }
+
+                            if(cand<mn[0]){
+                                mn=[cand,i,j]
+                            }
+                        }
+                    }
+                }
+                return mn;
+            }
         }
 
         function runGame(){
@@ -556,12 +597,14 @@ window.onload=async function() {
                     cnt++;
                     localStorage.setItem(user+"|points",cnt);
                     let rid=Math.floor(Math.random()*getmesaje["winner"].length);
-                    writeUp(getmesaje["winner"][rid]["msg"]);
+                    writeSum(getmesaje["winner"][rid]["msg"],msjboss);
                     writeSum(user+" | wins: "+cnt,document.getElementById("userinfo"));
+                    writeUp("You won");
                 }
                 else {
                     let rid=Math.floor(Math.random()*getmesaje["loser"].length);
-                    writeUp(getmesaje["loser"][rid]["msg"]);
+                    writeSum(getmesaje["loser"][rid]["msg"],msjboss);
+                    writeUp("You lost");
                 }
 
                 setTimeout(()=>{
@@ -590,7 +633,11 @@ window.onload=async function() {
                     nrHit++;
                     let r=1+Math.floor(nrHit/5);
                     ixo.src=`./imgaini/TestRosu${r}.png`;
-                    let posibilitati=chooseMove(a,sb);
+                    let diff=localStorage.getItem("diff");
+                    if(!diff){
+                        diff=1;
+                    }
+                    let posibilitati=chooseMove(a,sb,diff);
                     let x=posibilitati[1],y=posibilitati[2];
                     const yy=document.getElementById("r"+x+"c"+y);
                     sb[x][y]=1;

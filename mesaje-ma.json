@@ -16,13 +16,15 @@
     ],
 
     "hit": [
-        {"msg": "Ouch"},
-        {"msg": "Lucky shot"},
-        {"msg": "Hurt my feelings a bit with that one"}
+        {"msg": "Hit me baby one more time"},
+        {"msg": "Hahahahhahaha"},
+        {"msg": "Some more please"}
     ],
 
     "miss": [
-        {"msg": "You really don't get it"},
-        {"msg": "Give up at this point"}
+        {"msg": "Oh c'mon you were so close to it"},
+        {"msg": "Hella lucky"},
+        {"msg": "One does not simply possess so much skill"},
+        {"msg": "Your luck will run out at some point"}
     ]
 }

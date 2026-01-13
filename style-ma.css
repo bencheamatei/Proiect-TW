@@ -254,3 +254,9 @@ footer {
         width: 120px;
     }
 }
+
+#msjboss {
+    text-wrap: wrap;
+    text-align: center;
+    width: 128px;
+}

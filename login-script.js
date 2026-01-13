@@ -76,6 +76,14 @@ window.onload=async function() {
             }
 
             if(cauta){
+
+                if(document.getElementById("normal").checked){
+                    localStorage.setItem("diff","1");
+                }
+                else {
+                    localStorage.setItem("diff","2");
+                }
+
                 localStorage.setItem("player",user);
                 localStorage.setItem("playernickname",porecla);
                 
@@ -88,7 +96,7 @@ window.onload=async function() {
                 setTimeout(()=>{
                     let tt=document.getElementsByClassName("question")[0];
                     tt.style.display="block";
-                    tt=document.getElementsByTagName("a")[0];
+                    tt=document.getElementsByTagName("a")[3];
                     tt.setAttribute("href",localStorage.getItem("lastseen"));
                     console.log(localStorage.getItem("lastseen"));
                 },500);
@@ -99,8 +107,30 @@ window.onload=async function() {
         }
     });
 
-    const tcont=this.document.getElementsByClassName("container")[0];
-    tcont.addEventListener("click", (e)=>{
-
+    const beuton=this.document.getElementsByTagName("button")[0];
+    beuton.addEventListener("click", (e)=>{
+        e.stopPropagation();
     });
+
+    let count_color=0;
+    const tcont=this.document.getElementsByTagName("fieldset")[0];
+    tcont.addEventListener("click", (e)=>{
+        count_color++;
+        if(count_color%2){
+            e.currentTarget.style.backgroundColor="#702963";
+            e.currentTarget.style.color="burlywood";
+        }
+        else {
+            e.currentTarget.style.backgroundColor="cornflowerblue";
+            e.currentTarget.style.color="aliceblue";
+        }
+    });
+
+    const uu=document.getElementsByClassName("eu");
+    for(let i=0; i<uu.length; i++){
+        console.log(i);
+        uu[i].addEventListener("click", (e)=>{
+            e.stopPropagation();
+        });
+    }
 }
