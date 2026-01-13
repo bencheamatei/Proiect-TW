@@ -15,8 +15,9 @@ main {
     justify-content: center;
     align-items: center;
     gap: 5em;
-    height: 100vh;
+    min-height: 90vh;
     flex-wrap: wrap;
+    padding: 3em;
 }
 
 .game_container {
@@ -25,8 +26,8 @@ main {
 }
 
 .board {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     background-color: aliceblue;
     display: flex;
     flex-wrap: wrap;
@@ -37,8 +38,8 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-color: black;
     border-width: 1px;
     border-style: solid;
@@ -47,7 +48,7 @@ main {
 }
 
 header {
-    height: 1.5em;
+    height: auto;
     color: black;
     text-align: center;
     font-size: 30px;
@@ -64,8 +65,8 @@ header a {
 }
 
 .ship_deck {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     border: 2px solid black;
     display: flex;
     flex-wrap: wrap;
@@ -76,32 +77,32 @@ header a {
 }
 
 .ship1 {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: 2px solid burlywood;
     background-color: rgba(222, 184, 135, 0.404);
     box-sizing: border-box;
 }
 
 .ship2 {
-    width: 80px;
-    height: 40px;
+    width: 100px;
+    height: 50px;
     border: 2px solid burlywood;
     background-color: rgba(222, 184, 135, 0.404);
     box-sizing: border-box;
 }
 
 .ship3 {
-    width: 120px;
-    height: 40px;
+    width: 150px;
+    height: 50px;
     border: 2px solid burlywood;
     background-color: rgba(222, 184, 135, 0.404);
     box-sizing: border-box;
 }
 
 .ship4 {
-    width: 160px;
-    height: 40px;
+    width: 200px;
+    height: 50px;
     border: 2px solid burlywood;
     background-color: rgba(222, 184, 135, 0.404);
     box-sizing: border-box;
@@ -124,13 +125,13 @@ header a {
     transition-duration: 200ms;
 }
 
-.butonStart:active {
-    transform: scale(0.85);
+.butonStart:hover {
+    transform: scale(0.9);
 }
 
 .botboard {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     background-color: white;
     display: flex;
     flex-wrap: wrap;
@@ -140,8 +141,8 @@ header a {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-color: black;
     border-width: 1px;
     border-style: solid;
@@ -166,8 +167,8 @@ header a {
     transition-duration: 200ms;
 }
 
-.randomize:active {
-    transform: scale(0.85);
+.randomize:hover {
+    transform: scale(0.9);
 }
 
 a {
@@ -189,4 +190,67 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+footer {
+    padding: 2em;
+    height: auto;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3em;
+    color: black;
+}
+
+#bossimg {
+    align-self: center;
+}
+
+@media (max-width:600px) {
+    .board {
+        height: 300px;
+        width: 300px;
+    }
+
+    .botboard {
+        height: 300px;
+        width: 300px;
+    }
+
+    .block {
+        height: 30px;
+        width: 30px;
+    }   
+
+    .botblock {
+        height: 30px;
+        width: 30px;
+    }
+
+    .ship_deck {
+        height: 300px;
+        width: 300px;
+    }
+
+    .ship1 {
+        height: 30px;
+        width: 30px;
+    }
+
+    .ship2 {
+        height: 30px;
+        width: 60px;
+    }
+
+    .ship3 {
+        height: 30px;
+        width: 90px;
+    }
+
+    .ship4 {
+        height: 30px;
+        width: 120px;
+    }
 }

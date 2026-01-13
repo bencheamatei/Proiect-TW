@@ -4,6 +4,12 @@ const dy=[0,1,1,1,0,-1,-1,-1];
 const ddx=[-1,-1,1,1];
 const ddy=[-1,1,1,-1];
 let ori=[0,1,1,1,1,1,1,1,1,1,1];
+
+let boss = {
+    nume: "frank",
+    anger_level: 0
+};
+
 function inside(x,y){
     return x>=0 && y>=0 && x<10 && y<10;
 }
@@ -66,6 +72,48 @@ function potPune(x,y,a,len,ori){
 }
 
 window.onload=async function() {
+    let nickname=this.localStorage.getItem("playernickname");
+    if(nickname==""){
+        nickname=localStorage.getItem("player");
+    }
+    const data_curr=new Date();
+    this.document.addEventListener("keydown", (e)=>{
+        if(e.key=="w"){
+            const user=this.localStorage.getItem("player");
+            let cntwins=localStorage.getItem(user+"|points");
+            let cntls=localStorage.getItem(user+"|losses");
+            cntwins=Number(cntwins);
+            cntls=Number(cntls);
+            ora_curr=data_curr.getHours();
+            greeting="";
+            if(ora_curr>=18 && ora_curr<22){
+                greeting="Good evening!\n";
+            }
+            else if(ora_curr>=22 || ora_curr<5){
+                greeting="Good night!\n";
+            }
+            else if(ora_curr>=5 && ora_curr<12){
+                greeting="Good morning!\n";
+            }
+            else {
+                greeting="Good afternoon!\n";
+            }
+            if(cntwins==0){
+                this.alert(greeting+`Win precentage: 0%`);
+                // this.alert(`${user}`);
+            }
+            else {
+                let prc=(cntwins/(cntwins+cntls))*100.0;
+                this.alert(greeting+`Win precentage: ${prc.toFixed(2)}%`);
+            }
+        }
+    });
+
+    function writeBoss(s) {
+        let ct=document.getElementById("msjboss");
+        ct.innerHTML=s;
+    }
+
     let getmesaje;
     this.fetch("./mesaje.json")
         .then(resp=>resp.json())
@@ -78,7 +126,7 @@ window.onload=async function() {
 
     localStorage.setItem("lastseen","normal.html");
 
-    const gameCont=document.getElementsByClassName("game_container")[0];
+    const gameCont=document.getElementsByTagName("main")[0];
 
     let a=[]; // the player matrix 
     let b=[]; // the bot matrix
@@ -97,8 +145,8 @@ window.onload=async function() {
         let ui=document.getElementById("userinfo");
         const user=this.localStorage.getItem("player");
         writeSum(user+" | wins: "+localStorage.getItem(user+"|points"),ui);
-        writeUp("Place your ships");
-        writeSum("Logout",document.getElementById("aici"));
+        writeUp(`Hey ${nickname}, place your ships`);
+        writeSum("logout/change account",document.getElementById("aici"));
         document.getElementById("aici").addEventListener("click", (event)=>{
             localStorage.removeItem("player");
         },once=true);
@@ -113,7 +161,7 @@ window.onload=async function() {
     }
 
     function setUp() {
-        writeUp("Place your ships");
+        writeUp(`Hey ${nickname}, place your ships!`);
         for(let i=1; i<=10; i++){
             ori[i]=1;
         }
@@ -127,6 +175,7 @@ window.onload=async function() {
         let rr=document.createElement("div");
         rr.classList.add("randomize");
         rr.innerHTML="Randomize";
+        rr.tabIndex="-1";
         rr.addEventListener("click", (e)=>{
             a=genBoard();
             for(let i=0; i<10; i++){
@@ -144,6 +193,30 @@ window.onload=async function() {
             }
             rr.remove();
         }, once=true);
+
+        document.addEventListener("keydown", (e)=>{
+            const l=document.getElementsByClassName("randomize");
+            if(l.length==0){
+                return;
+            }
+            if(e.key=="r"){
+                a=genBoard();
+                for(let i=0; i<10; i++){
+                    for(let j=0; j<10; j++){
+                        if(a[i][j]>0){
+                            let uu=document.getElementById("r"+i+"c"+j);
+                            uu.style.backgroundColor="rgba(0, 0, 255, 0.5)";
+                            uu.style.border="2px solid blue";
+                        }
+                    }
+                }
+                for(let i=1; i<=10; i++){
+                    const uu=document.getElementById(String(i));
+                    uu.remove();
+                }
+                rr.remove();
+            }
+        },once=true);
 
         gameCont.appendChild(rr);
 
@@ -322,10 +395,20 @@ window.onload=async function() {
                 jj.remove();
             }
             gameCont.appendChild(p);
+            observer.disconnect();
+        }, once=true);
+
+        document.addEventListener("keydown", (e)=>{
+            const pppu=document.getElementsByClassName("butonStart");
+            if(pppu.length>0 && e.key=="s"){
+                pppu[0].remove();
+                gameLogic();
+            }
         }, once=true);
     }
 
     function gameLogic() {
+        boss.anger_level=0;
         b=genBoard();
         writeUp("");
         let bBoard=document.createElement("div");
@@ -353,14 +436,16 @@ window.onload=async function() {
             sb.push(aux2);
         }
 
-        let xo=document.createElement("div");
+        let xo=document.createElement("figure");
         xo.id="bossimg";
-
         let ixo=document.createElement("img");
         ixo.alt="the boss";
         ixo.src="./imgaini/TestRosu1.png";
         xo.appendChild(ixo);
         gameCont.appendChild(xo);
+        let msjboss=document.createElement("figcaption");
+        msjboss.id="msjboss";
+        xo.appendChild(msjboss);
 
         let nrHit=1;
 
@@ -371,22 +456,23 @@ window.onload=async function() {
                 event.target.innerHTML="M";
                 event.target.style.backgroundColor="rgba(128, 128, 128, 0.3)";
                 event.target.style.border="2px grey solid";
-                writeUp("");
+                writeBoss("");
             }
             else {
                 event.target.innerHTML="X";
                 event.target.style.backgroundColor="rgba(255, 0, 0, 0.418)";
                 event.target.style.border="2px red solid";
                 nrHit++;
+                boss.anger_level=nrHit/2;
                 ixo.src=`./imgaini/TestRosu${nrHit}.png`;
 
                 let uycaramba=Math.floor(Math.random()*3);
                 if(uycaramba==0){
                     let ppuy=Math.floor(Math.random()*getmesaje["hit"].length);
-                    writeUp(getmesaje["hit"][ppuy]["msg"]);
+                    writeBoss(getmesaje["hit"][ppuy]["msg"]);
                 }
                 else {
-                    writeUp("");
+                    writeBoss("");
                 }
             }
 
@@ -604,7 +690,7 @@ window.onload=async function() {
                                 break;
                             }
                         }
-                        val-=(Math.abs(i-5)+Math.abs(j-5));
+                        val-=(Math.abs(i-boss.anger_level/2)+Math.abs(j-boss.anger_level/2));
                         if(val>mx[0]){
                             mx=[val,i,j];
                         }
@@ -624,11 +710,17 @@ window.onload=async function() {
                     localStorage.setItem(user+"|points",cnt);
                     writeSum(user+" | wins: "+cnt,document.getElementById("userinfo"));
                     let rid=Math.floor(Math.random()*getmesaje["winner"].length);
-                    writeUp(getmesaje["winner"][rid]["msg"]);
+                    writeBoss(getmesaje["winner"][rid]["msg"]);
+                    writeUp("You won");
                 }
                 else {
                     let rid=Math.floor(Math.random()*getmesaje["loser"].length);
-                    writeUp(getmesaje["loser"][rid]["msg"]);
+                    writeBoss(getmesaje["loser"][rid]["msg"]);
+                    writeUp("You lost");
+                    const user=this.localStorage.getItem("player");
+                    let cnt=localStorage.getItem(user+"|losses");
+                    cnt++;
+                    localStorage.setItem(user+"|losses",cnt);
                 }
 
                 setTimeout(()=>{

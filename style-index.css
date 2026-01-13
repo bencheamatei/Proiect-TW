@@ -65,6 +65,7 @@ footer {
     align-items: center;
     flex-wrap: wrap;
     gap: 3em;
+    width: 100%;
 }
 
 footer div {

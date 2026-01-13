@@ -66,9 +66,49 @@ function potPune(x,y,a,len,ori){
 }
 
 window.onload=async function() {
+    let nickname=this.localStorage.getItem("playernickname");
+    if(nickname==""){
+        nickname=localStorage.getItem("player");
+    }
+    const data_curr=new Date();
+    this.document.addEventListener("keydown", (e)=>{
+        if(e.key=="w"){
+            const user=this.localStorage.getItem("player");
+            let cntwins=localStorage.getItem(user+"|points");
+            let cntls=localStorage.getItem(user+"|losses");
+            cntwins=Number(cntwins);
+            cntls=Number(cntls);
+            let ora_curr=data_curr.getHours();
+            // 6pm - 10pm  evening
+            // 10pm - 5am  night
+            // 5am - 12 - morning 
+            greeting="";
+            if(ora_curr>=18 && ora_curr<22){
+                greeting="Good evening!\n";
+            }
+            else if(ora_curr>=22 || ora_curr<5){
+                greeting="Good night!\n";
+            }
+            else if(ora_curr>=5 && ora_curr<12){
+                greeting="Good morning!\n";
+            }
+            else {
+                greeting="Good afternoon!\n";
+            }
+            
+            if(cntwins==0){
+                this.alert(greeting+`Win precentage: 0%`);
+                // this.alert(`${user}`);
+            }
+            else {
+                let prc=(cntwins/(cntwins+cntls))*100.0;
+                this.alert(greeting+`Win precentage: ${prc.toFixed(2)}%`);
+            }
+        }
+    });
 
     let getmesaje;
-    this.fetch("./mesaje.json")
+    this.fetch("./mesaje-ma.json")
         .then(resp=>resp.json())
         .then(mesaje=>{
             getmesaje=mesaje;
@@ -79,7 +119,7 @@ window.onload=async function() {
 
     localStorage.setItem("lastseen","ma.html");
 
-    const gameCont=document.getElementsByClassName("game_container")[0];
+    const gameCont=document.getElementsByTagName("main")[0];
 
     let a=[]; // the player matrix 
     let b=[]; // the bot matrix
@@ -98,7 +138,7 @@ window.onload=async function() {
         let ui=document.getElementById("userinfo");
         const user=this.localStorage.getItem("player");
         writeSum(user+" | wins: "+localStorage.getItem(user+"|points"),ui);
-        writeUp("Place your ships");
+        writeUp(`Hey ${nickname}, place your ships`);
         writeSum("Logout",document.getElementById("aici"));
         document.getElementById("aici").addEventListener("click", (event)=>{
             localStorage.removeItem("player");
@@ -114,7 +154,7 @@ window.onload=async function() {
     }
 
     function setUp() {
-        writeUp("Place your ships");
+        writeUp(`Hey ${nickname}, place your ships`);
         for(let i=1; i<=10; i++){
             ori[i]=1;
         }
@@ -145,6 +185,30 @@ window.onload=async function() {
             }
             rr.remove();
         }, once=true);
+
+        document.addEventListener("keydown", (e)=>{
+            const l=document.getElementsByClassName("randomize");
+            if(l.length==0){
+                return;
+            }
+            if(e.key=="r"){
+                a=genBoard();
+                for(let i=0; i<10; i++){
+                    for(let j=0; j<10; j++){
+                        if(a[i][j]>0){
+                            let uu=document.getElementById("r"+i+"c"+j);
+                            uu.style.backgroundColor="rgba(222, 184, 135, 0.5)";
+                            uu.style.border="2px solid burlywood";
+                        }
+                    }
+                }
+                for(let i=1; i<=10; i++){
+                    const uu=document.getElementById(String(i));
+                    uu.remove();
+                }
+                rr.remove();
+            }
+        },once=true);
 
         gameCont.appendChild(rr);
 
@@ -324,6 +388,14 @@ window.onload=async function() {
             }
             gameCont.appendChild(p);
         }, once=true);
+
+        document.addEventListener("keydown", (e)=>{
+            const pppu=document.getElementsByClassName("butonStart");
+            if(pppu.length>0 && e.key=="s"){
+                pppu[0].remove();
+                gameLogic();
+            }
+        }, once=true);
     }
 
     function gameLogic() {
@@ -354,6 +426,19 @@ window.onload=async function() {
             sa.push(aux1);
             sb.push(aux2);
         }
+
+        let xo=document.createElement("figure");
+        xo.id="bossimg";
+        let ixo=document.createElement("img");
+        ixo.alt="the boss";
+        ixo.src="./imgaini/TestRosu1.png";
+        xo.appendChild(ixo);
+        gameCont.appendChild(xo);
+        let msjboss=document.createElement("figcaption");
+        msjboss.id="msjboss";
+        xo.appendChild(msjboss);
+
+        let nrHit=0;
 
         function addClick(event){
             const s=event.target.id;
@@ -465,7 +550,6 @@ window.onload=async function() {
 
         function runGame(){
             if(gameOver(a,b,sa,sb)!=0){
-
                 if(gameOver(a,b,sa,sb)==1){
                     const user=this.localStorage.getItem("player");
                     let cnt=localStorage.getItem(user+"|points");
@@ -483,8 +567,10 @@ window.onload=async function() {
                 setTimeout(()=>{
                     let p1=document.getElementsByClassName("board")[0];
                     let p2=document.getElementsByClassName("botboard")[0];
+                    let p3=document.getElementById("bossimg");
                     p1.remove();
                     p2.remove();
+                    p3.remove();
                     setUp();
                 }, 3000);
             }
@@ -501,11 +587,13 @@ window.onload=async function() {
                     }
                 }
                 else {
+                    nrHit++;
+                    let r=1+Math.floor(nrHit/5);
+                    ixo.src=`./imgaini/TestRosu${r}.png`;
                     let posibilitati=chooseMove(a,sb);
                     let x=posibilitati[1],y=posibilitati[2];
                     const yy=document.getElementById("r"+x+"c"+y);
                     sb[x][y]=1;
-
                     if(a[x][y]>0){
                         let loccnt=0;
                         for(let i=0; i<10; i++){

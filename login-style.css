@@ -1,10 +1,10 @@
 a {
     text-decoration: none;
-    color: black;
+    color: aliceblue;
 }
 
 body {
-    color: black;
+    color: aliceblue;
     background-color: cornflowerblue;
     font-family: Fira Mono, monospace;
     display: flex;
@@ -20,13 +20,17 @@ body {
 }
 
 .question {
-    border: 2px black solid;
+    border: 2px aliceblue solid;
     padding: 5px;
     display: none;
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    font-size: large;
 }
 
 .question:hover {
-    border: 2px black solid;
+    border: 2px aliceblue solid;
     padding: 5px;
     background-color: rgb(72, 129, 234);
 }
@@ -37,19 +41,22 @@ fieldset {
     align-items: flex-start;
     flex-direction: column;
     gap: 2em;
-    padding: 50px;
+    padding: 60px;
+    font-size: x-large;
 }
 
 button {
-    border: 2px black solid;
+    border: 2px aliceblue solid;
     padding: 5px;
     background-color: cornflowerblue;
-    width: 120px;
-    height: 40px;
+    width: 200px;
+    height: 50px;
     transform: scale(1.0);
     transition-property: transform;
     transition-duration: 200ms;
     transition-timing-function: ease;
+    color: aliceblue;
+    font-size: large;
 }
 
 button:hover {
@@ -59,23 +66,57 @@ button:hover {
 
 svg {
     height: 40px;
-    position: absolute;
+    transition-property: height;
+    transition-duration: 500ms;
+    transition-timing-function: ease;
+    fill: burlywood;
+    /* position: absolute; */
 }
 
 #barcuta1 {
-    top: 100px;
-    left: 100px;
+    /* top: 100px;
+    left: 100px; */
     fill: blue;
 }
 
 #barcuta2 {
-    top: 300px;
-    right: 50px;
+    /* top: 300px;
+    right: 50px; */
     fill: yellow;
 }
 
 #barcuta3 {
-    bottom: 100px;
-    left: 500px;
+    /* bottom: 100px;
+    left: 500px; */
     fill: red;
+}
+
+.majoc {
+    position: absolute;
+}
+
+#ab1 {
+    position: absolute;
+    left: 100px;
+    top: 500px;
+}
+
+#ab2 {
+    position: absolute;
+    left: 200px;
+    top: 30px;
+}
+
+#ab3 {
+    position: absolute;
+    left: 1200px;
+    top: 600px;
+}
+
+legend {
+    font-size: x-large;
+}
+
+input {
+    font-size: large;
 }

@@ -5,20 +5,35 @@
         <script src="login-script.js"></script>
     </head>
     <body>
-        <svg id="barcuta1" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg>
-        <svg id="barcuta2" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg>
-        <svg id="barcuta3" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg>
+        <a href="index.html" id="ab1"><svg id="barcuta1" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg></a>
+        <a href="index.html" id="ab2"><svg id="barcuta2" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg></a>
+        <a href="index.html" id="ab3"><svg id="barcuta3" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>boAt</title><path d="M12.081 0 5.833 17.686 17.15 13.93Zm-10.2 18.223L4.961 24H19.14l2.98-5.777z"/></svg></a>
         <div class="container">
             <form id="form" action="/earth" method="post">
                 <fieldset>
                     <legend>Log in</legend>
                         <div>
-                            <label> <small class="trebe">*</small> Username/email </label>
-                            <input id="n1" type="text" minlength="1" maxlength="50" required>
+                            <label> <small class="trebe">*</small> Username/email: </label>
+                            <input id="n1" type="text" required>
                         </div>
                         <div>
-                            <label> <small class="trebe">*</small> Password </label>
-                            <input id="n2" type="password" minlength="4" maxlength="50" required>
+                            <label> <small class="trebe">*</small> Password: </label>
+                            <input id="n2" type="password" required>
+                        </div>
+                        <div>
+                            <label> Nickname: </label>
+                            <input id="n7" type="text">
+                        </div>
+                        <div>
+                            <div><label> Select your favourite gamemode: </label></div>
+                            <div>
+                                <input type="radio" id="normal" name="drone" value="normal" checked>
+                                <label for="normal">Normal var.</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="ma" name="drone" value="ma">
+                                <label for="ma">Inverse var.</label>
+                            </div>
                         </div>
                         <div>
                             <button type="submit"> Submit </button>
@@ -26,8 +41,10 @@
                 </fieldset>
             </form>
         </div>  
-        <div class="question">
-            <a href="normal.html">Go back to playing!</a>
-        </div>
+        <a href="normal.html">
+            <div class="question">
+                Go back to playing!
+            </div>
+        </a>
     </body>
 </html>

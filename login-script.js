@@ -1,25 +1,46 @@
 function validateForm() {
     const regex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const regex2=/^.{4,1000}$/;
     const user=document.getElementById("n1").value;
     const passwd=document.getElementById("n2").value;
     for(let i=0; i<user.length; i++){
         if(user[i]=="@"){
             if(!regex.test(user)){
-                return false;
+                return -1;
             }
             break;
         }
     }
-    return true;
+
+    if(!regex2.test(passwd)){
+        return -2;
+    }
+
+    return 0;
 }
 
 window.onload=async function() {
+    let users=null;
+    try {
+        const resp=await fetch("./accounts.json");
+        let uusers=await resp.json();
+        users=uusers;
+    }   
+    catch(error) {
+        console.error(error);
+    }
 
     const colors=["coral", "crimson", "goldenrod", "indianeed", "indigo", "marron", "midnightblue", "teal", "red", "blue", "orange", "purple"];
+    const start=Date.now();
 
     function changeColor(element){
-        let care=Math.floor(Math.random()*colors.length);
-        element.style.fill=colors[care];
+        let care=Math.floor(Math.random()*1000000);
+        let ms=((Date.now()-start)^care)%colors.length;
+        element.style.fill=colors[ms];
+
+        // mai schimb si marimea 
+        let hcand=40+Math.floor(Math.random()*15);
+        element.style.height=`${hcand}px`;
     }
 
     for(let i=1; i<=3; i++){
@@ -32,37 +53,54 @@ window.onload=async function() {
     form.addEventListener("submit", (event)=>{
         event.preventDefault();
 
-        const user=document.getElementById("n1").value;
+        let user=document.getElementById("n1").value;
         const passwd=document.getElementById("n2").value;
-
-        if(!validateForm()){
-            this.alert("Invalid log in data");
+        let porecla=document.getElementById("n7").value;
+        const pup=validateForm();
+        if(pup<0){
+            if(pup==-1){
+                this.alert("Invalid email format");
+            }
+            else {
+                this.alert("Password should be at least 4 characters");
+            }
         }
         else {
-            this.fetch("./accounts.json")
-                .then(resp=>resp.json())
-                .then(users=>{
-                    let cauta=users.find(x=>(x.username===user || x.email==user) && x.password===passwd);
-                    if(cauta){
-                        localStorage.setItem("player",user);
-                        if(localStorage.getItem(user+"|points")==null){
-                            localStorage.setItem(user+"|points","0");
-                        }
-                        setTimeout(()=>{
-                            let tt=document.getElementsByClassName("question")[0];
-                            tt.style.display="block";
-                            tt=document.getElementsByTagName("a")[0];
-                            tt.setAttribute("href",localStorage.getItem("lastseen"));
-                            console.log(localStorage.getItem("lastseen"));
-                        },500);
-                    }
-                    else {
-                        this.alert("Invalid username or password");
-                    }
-                })
-                .catch(error=>{
-                    console.log("Error when trying to access the db");
-                });
+            cauta=false;
+            for(let i=0; i<users.length; i++){
+                if((users[i].email==user || users[i].username==user) && users[i].password==passwd){
+                    cauta=true;
+                    user=users[i].username;
+                    break;
+                }
+            }
+
+            if(cauta){
+                localStorage.setItem("player",user);
+                localStorage.setItem("playernickname",porecla);
+                
+                if(localStorage.getItem(user+"|points")==null){
+                    localStorage.setItem(user+"|points","0");
+                }
+                if(localStorage.getItem(user+"|losses")==null){
+                    localStorage.setItem(user+"|losses","0");
+                }
+                setTimeout(()=>{
+                    let tt=document.getElementsByClassName("question")[0];
+                    tt.style.display="block";
+                    tt=document.getElementsByTagName("a")[0];
+                    tt.setAttribute("href",localStorage.getItem("lastseen"));
+                    console.log(localStorage.getItem("lastseen"));
+                },500);
+            }
+            else {
+                this.alert("Invalid username or password");
+            }
         }
+    });
+
+    const tcont=this.document.getElementsByClassName("container")[0];
+    tcont.addEventListener("click", (e)=>{
+
     });
 }

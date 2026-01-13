@@ -13,5 +13,15 @@
         "username": "ciprian",
         "password": "wow1234",
         "email": "mitoceanuci@gmail.com"
+    },
+    {
+        "username": "batei",
+        "password": "jmek",
+        "email": "mateib@gmail.com"
+    }, 
+    {
+        "username": "ionutz",
+        "password": "1234",
+        "email": "bujorionutraul@gmail.com"
     }
 ]
