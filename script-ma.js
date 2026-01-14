@@ -630,9 +630,6 @@ window.onload=async function() {
                     }
                 }
                 else {
-                    nrHit++;
-                    let r=1+Math.floor(nrHit/5);
-                    ixo.src=`./imgaini/TestRosu${r}.png`;
                     let diff=localStorage.getItem("diff");
                     if(!diff){
                         diff=1;
@@ -685,6 +682,15 @@ window.onload=async function() {
                         yy.innerHTML="X";
                         yy.style.backgroundColor="rgba(255, 0, 0, 0.418)";
                         yy.style.border="2px red solid";
+
+                        nrHit=0;
+                        for(let i=0; i<10; i++){
+                            for(let j=0; j<10; j++){
+                                nrHit+=sb[i][j];
+                            }
+                        }
+                        let r=1+Math.floor(nrHit/5);
+                        ixo.src=`./imgaini/TestRosu${r}.png`;
                         setTimeout(runGame,500);
                     }   
                     else {
@@ -692,6 +698,15 @@ window.onload=async function() {
                         yy.innerHTML="M";
                         yy.style.backgroundColor="rgba(128, 128, 128, 0.3)";
                         yy.style.border="2px grey solid";
+
+                        nrHit=0;
+                        for(let i=0; i<10; i++){
+                            for(let j=0; j<10; j++){
+                                nrHit+=sb[i][j];
+                            }
+                        }
+                        let r=1+Math.floor(nrHit/5);
+                        ixo.src=`./imgaini/TestRosu${r}.png`;
                         setTimeout(runGame,500);
                     }
                 }

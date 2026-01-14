@@ -39,7 +39,7 @@ window.onload=async function() {
         element.style.fill=colors[ms];
 
         // mai schimb si marimea 
-        let hcand=40+Math.floor(Math.random()*15);
+        let hcand=40+Math.floor(Math.random()*30);
         element.style.height=`${hcand}px`;
     }
 

@@ -561,7 +561,7 @@ window.onload=async function() {
             return 0;
         }   
 
-        function chooseMove(a,sb){
+        function chooseMove(a,sb,agg){
             // caut cea mai ok mutare pentru calculator (cumva tot random o sa fie)
             // singura chestie care chiar trebuie bagata e ca atunci cand nimereste o nava sa o caute pana la capat
             fq=[];
@@ -690,9 +690,17 @@ window.onload=async function() {
                                 break;
                             }
                         }
+                        
                         val-=(Math.abs(i-boss.anger_level/2)+Math.abs(j-boss.anger_level/2));
-                        if(val>mx[0]){
-                            mx=[val,i,j];
+                        if(agg==2){
+                            if(val>=mx[0]){
+                                mx=[val,i,j];
+                            }
+                        }
+                        else {
+                            if(val>mx[0]){
+                                mx=[val,i,j];
+                            }
                         }
                     }
                 }
@@ -749,7 +757,11 @@ window.onload=async function() {
                     }
                 }
                 else {
-                    let posibilitati=chooseMove(a,sb);
+                    let dif=Number(localStorage.getItem("diff"));
+                    if(!dif){
+                        dif=1;
+                    }
+                    let posibilitati=chooseMove(a,sb,dif);
                     let x=posibilitati[1],y=posibilitati[2];
                     const yy=document.getElementById("r"+x+"c"+y);
                     sb[x][y]=1;
